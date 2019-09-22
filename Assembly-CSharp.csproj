@@ -66,6 +66,7 @@
     <Compile Include="Assets\SimpleJSON.cs" />
     <Compile Include="Assets\SimpleJSONBinary.cs" />
     <Compile Include="Assets\SimpleJSONUnity.cs" />
+    <Compile Include="Assets\ZenzoForgingScript.cs" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>F:/UNITY/Zenzo/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>
