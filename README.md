@@ -16,6 +16,16 @@ A basic template for startup with clean codes and layout.
 
 
 
+id:
+email:
+purchases:
+profit:
+sales:
+avatar:
+username:
+address:
+api_key:
+balance:
 
 
 
@@ -23,5 +33,3 @@ A basic template for startup with clean codes and layout.
 
 
 
-
-Dont be shy to donate :  ZnMSgTUFfvP68ypoWWkaVEt5BsxLjNfUYi
