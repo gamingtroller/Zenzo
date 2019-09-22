@@ -7,32 +7,23 @@ using UnityEngine.UI;
 using SimpleJSON;
 
 public class control : MonoBehaviour {
-public Text DisplayText;
-public Text inputText;
 
-    /* Arcade Classes */
 
-    // Unique Items
-    public class Item
-    {
-        public string id;   // Unique ID of the item (Combats duplication, makes unique items possible).
-        public string name;  // Name of an item (Safe to duplicate on other items).
-        public double value; // The forged ZNZ value of the unique item.
-        public GameObject obj;   // In-game object of the unique item.
-    }
-
-    /* Gameplay Mechanic variables (User, items, spawn points, ect) */
-
-    [Header("API")]
-    [Tooltip("User Authentication Key")]
+     
     public string ApiKey = "";
-    [Tooltip("The Main API Endpoint URL")]
+    
     public string EndpointMaster = "https://arcade.zenzo.io/api/v1/";
+    public string EndpointKey;
 
     public InputField ApiKey_Input;
-    public Text ArcadeStatus;
-    public Text UserGUIBalance;
-    public string EndpointKey;
+    public Text Status;
+    public Text BalanceText;
+    public Text UsernameText;
+    public Text IDText;
+    public Text AddressText;
+    public Text EmailText;
+    public Image imageT;
+  
  
         
 
@@ -67,30 +58,68 @@ public Text inputText;
         {
             var data = JSON.Parse(uwr.downloadHandler.text);
             //Debug.Log("Processing Arcade Signal: " + uwr.downloadHandler.text);
-            ArcadeStatus.text = data.ToString();
+          
             if (endpoint == "ping")
             {
-                ArcadeStatus.text ="Arcade API is Active and a connection has been established.";
+                Status.text ="Arcade API is Active and a connection has been established.";
             }
             else if (endpoint == "account")
             {
                 try
                 {
-                    //Debug.Log("User is " + data["content"]["username"].Value + " with ID " + data["content"]["id"].Value + ", pulling user's forge items.");
-                    Username = data["content"]["username"].Value;
-                    UserId = data["content"]["id"].Value;
+
+                    Debug.Log(data);
+
                     //Debug.Log("User has " + data["content"]["balance"].Value + " ZNZ");
+
+                   
+
+
                     if (data["content"]["balance"].AsFloat > 0)
                     {
                         UserBalance = data["content"]["balance"].AsFloat;
-                        UserGUIBalance.text = "ZNZ: " + UserBalance.ToString();
+                        BalanceText.text = "ZNZ: " + UserBalance.ToString();
                     }
-                   
+
+                    if (data["content"]["username"] != null)
+                    {
+                        UsernameText.text = data["content"]["username"].ToString();
+
+                    }
+
+                    if (data["content"]["email"] != null)
+                    {
+                        EmailText.text = data["content"]["email"].ToString();
+
+                    }
+
+                    if (data["content"]["id"] != null)
+                    {
+                        IDText.text = data["content"]["id"].ToString();
+
+                    }
+
+                    if (data["content"]["address"] != null)
+                    {
+                        AddressText.text = data["content"]["address"].ToString();
+
+                    }
+
+
+
+
+
+
+
+                    Status.text = "Data Retrieved Successfully";
+
+
+
                 }
                 catch (Exception e)
                 {
-                    ArcadeStatus.text = "Arcade Status: Invalid Key";
-                    ArcadeStatus.text="Arcade: Unable to parse user object, probably an incorrect API Key.";
+                    Status.text = "Arcade Status: Invalid Key";
+                    Status.text="Arcade: Unable to parse user object, probably an incorrect API Key.";
                    
                    
                 }
