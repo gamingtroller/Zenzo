@@ -22,7 +22,7 @@ public class control : MonoBehaviour {
     public Text IDText;
     public Text AddressText;
     public Text EmailText;
-    public Image imageT;
+    public RawImage imageT;
   
  
         
@@ -30,6 +30,7 @@ public class control : MonoBehaviour {
   
     // User Information
     private string Username = "";
+    private Texture UserAvatar;
     private string UserId = "";
     private float UserBalance = 0;
 
@@ -106,6 +107,7 @@ public class control : MonoBehaviour {
                     }
 
 
+                    StartCoroutine(GetAvatar(data["content"]["avatar"].Value));
 
 
 
@@ -138,7 +140,22 @@ public class control : MonoBehaviour {
         StartCoroutine(Post(EndpointKey, "api_key=" + ApiKey));
     }
 
+    // Grabs an avatar from the Arcade's avatar URL
+    IEnumerator GetAvatar(string url) {
+        Debug.Log("Fetching avatar...");
+        UnityWebRequest www = UnityWebRequestTexture.GetTexture(url);
+        yield return www.SendWebRequest();
 
+        if(www.isNetworkError || www.isHttpError) {
+            Debug.Log(www.error);
+        }
+        else {
+            Debug.Log("Setting avatar texture...");
+            UserAvatar = ((DownloadHandlerTexture)www.downloadHandler).texture;
+            imageT.texture = UserAvatar;
+            Debug.Log("Avatar set!");
+        }
+    }
 
     public void CheckBalance()
     {
